@@ -26,7 +26,36 @@ public class Customer {
     public int getNumberOfAccounts() {
         return accounts.size();
     }
-
+    
+    /*
+     * Transfer Money from this Account 
+     * to another account
+     * @param fromAccount:  source Account
+     * @param toAccount : destination account
+     * @param amount : The amount to transfer
+     * 
+     */
+        
+    public void transfer(Account fromAccount,double amount, Account toAccount){
+        	/*
+        	 * only allow transfer between own account
+        	 */
+    	double total=fromAccount.sumTransactions();
+    	if (!accounts.contains(fromAccount)){
+            throw new IllegalArgumentException("Invalid Source Account to transfer");	
+    	}
+    	else if (!accounts.contains(toAccount)){
+            throw new IllegalArgumentException("Invalid Destination Account to transfer");	
+    	}
+    	else if (amount<0) {
+                throw new IllegalArgumentException("amount must be greater than zero");
+        }else if (total<amount) {
+                throw new IllegalArgumentException("amount must be NOT greater than total");
+        }else {
+            	fromAccount.withdraw(amount);
+            	toAccount.deposit(amount);       		
+        }
+    }
     public double totalInterestEarned() {
         double total = 0;
         for (Account a : accounts)
@@ -48,7 +77,7 @@ public class Customer {
 
     private String statementForAccount(Account a) {
         String s = "";
-
+        /*
        //Translate to pretty account type
         switch(a.getAccountType()){
             case Account.CHECKING:
@@ -61,7 +90,8 @@ public class Customer {
                 s += "Maxi Savings Account\n";
                 break;
         }
-
+        */
+        s +=a.getAccountTypeName()+"\n";
         //Now total up all the transactions
         double total = 0.0;
         for (Transaction t : a.transactions) {
