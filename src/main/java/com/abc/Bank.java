@@ -43,4 +43,19 @@ public class Bank {
             return "Error";
         }
     }
+
+	public boolean findCustomer(String userName) {
+        for(Customer c: customers)
+        	if (c.getName().equalsIgnoreCase(userName)) return true;
+        return false;
+	}
+	
+	public Customer getCustomer(String uerName) {
+		Customer c;
+		for (int i=0;i<customers.size();i++)  {
+			c=customers.get(i);
+			if (c.getName().equalsIgnoreCase(uerName)) return c;
+		}
+		return null;
+	}
 }
